@@ -160,6 +160,7 @@ $$
 $$
 \text{ROI (\%)} = \left( \frac{\pi}{\text{Annual Cost}} \right) \times 100
 $$
+
 ---
 
 
