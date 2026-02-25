@@ -25,23 +25,23 @@ Gabia 클라우드사업팀 인턴 Dylan (김동현)
 
 ## 1. 시뮬레이션 흐름도
 
-### 1_1. Cost Assumption
+### 1_1. 비용 추정
 - ChannelTalk 연간 비용: 9,000,000원
 - 계약 존속 기간: 12개월
 
-### 1_2. Inquiry Modeling
+### 1_2. 통계 모델링
 - 월 평균 66건 진성 문의 가정
 - Poisson 분포 기반 연간 문의 수 생성
 
-### 1_3. Conversion Logic
+### 1_3. 규칙 
 - 전환율 가정
 - 계약 월 단가 범위 설정
 
-### 1_4. Monte Carlo Simulation
+### 1_4. Monte Carlo 시뮬레이션
 - 50,000회 반복 실행
 - 연간 순이익 분포 계산
 
-### 1_5. Output
+### 1_5. 결과
 - 손익분기 최소 계약 단가
 - 계약 건수별 손익분기 단가
 - 시나리오별 순이익 분포
@@ -134,7 +134,7 @@ ROI 달성 확률:
 <img width="1552" height="921" alt="image" src="https://github.com/user-attachments/assets/3a5cef3f-dde8-48bf-ba50-dd78f5ab54e7" />
 
 - ChannelTalk은 고단가 계약 1~2건으로 손익분기 가능
-- 응답 지연은 전환율 하락으로 직결
+- (응답 지연)과 (전환율 하락)간 상관관계 O
 - 핵심 변수는 문의 수가 아닌 전환율이다.
 
 ---
