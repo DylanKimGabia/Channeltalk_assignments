@@ -24,7 +24,8 @@ Gabia 클라우드사업팀 인턴 Dylan (김동현)
 ---
 
 ## 분석 결과
-<img width="2317" height="840" alt="통계 분석 최종" src="https://github.com/user-attachments/assets/1ebcdfd4-2e40-4f7b-a643-0db7ec36e2e6" />
+<img width="1689" height="840" alt="결과 그래프 (사진)" src="https://github.com/user-attachments/assets/d4e89cc1-c93f-4ca2-86a3-298142843ff2" />
+
 
 - ChannelTalk은 고단가 계약 1~2건으로도 충분히 손익분기 가능 O
 - (응답 지연)과 (전환율 하락)간 상관관계 O
