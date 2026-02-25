@@ -150,9 +150,9 @@ $$
 D_{month} \approx \frac{52 \text{ weeks} \times 5 \text{ days/week}}{12 \text{ months}} = 21.66 \dots \approx 22
 $$
 
-* **52 weeks**: 1년의 총 주차 수
-* **5 days/week**: 주 5일 근무제 기준 영업일
-* **12 months**: 1년의 총 개월 수
+* **$P_{conv}$**: 시나리오별 설정된 전환율 (0.5% ~ 5.0%)
+* **$L_{price}$**: 시나리오별 범위 내 임의의 계약 월 단가
+* **$\text{Duration}$**: 평균 계약 존속 기간 (12개월 가정)
 
 
 ### (참고 1_2) 기대 매출 ($R$)
@@ -163,14 +163,6 @@ $$
 R = \sum_{i=1}^{N_{in} \times P_{conv}} (L_{price, i} \times \text{Duration})
 $$
 
-
-$$
-D_{month} \approx \frac{52 \text{ weeks} \times 5 \text{ days/week}}{12 \text{ months}} = 21.66 \dots \approx 22
-$$
-
-* **$P_{conv}$**: 시나리오별 설정된 전환율 (0.5% ~ 5.0%)
-* **$L_{price}$**: 시나리오별 범위 내 임의의 계약 월 단가
-* **$\text{Duration}$**: 평균 계약 존속 기간 (12개월 가정)
 
 ### (참고 1_3). 순이익 및 ROI (Net Profit & ROI)
 
