@@ -79,7 +79,7 @@ Gabia 클라우드사업팀 인턴 Dylan (김동현)
 
 ### 2_3. 매출 계산 로직
 
-2.1. 연간 문의 인입량 (Annual Inbound)일일 평균 문의 발생 건수를 $\lambda$로 설정하고, 독립적인 사건의 발생 횟수를 모델링하기 위해 **포아송 분포(Poisson Distribution)**를 사용합니다.$$N_{in} = \sum_{m=1}^{12} \left( \sum_{d=1}^{22} X_{d,m} \right), \quad X_{d,m} \sim \text{Poisson}(\lambda=3.0)$$2.2. 기대 매출 (Total Revenue)각 문의가 계약으로 전환될 확률($P_{conv}$)과 무작위로 결정되는 계약 단가($L_{price}$)를 결합하여 총 매출을 산출합니다.$$R = \sum_{i=1}^{N_{in} \times P_{conv}} (L_{price, i} \times \text{Duration})$$$P_{conv}$: 시나리오별 설정된 전환율 (0.5% ~ 5.0%)$L_{price}$: 시나리오별 범위 내 임의의 계약 월 단가$\text{Duration}$: 평균 계약 존속 기간 (12개월 가정)2.3. 순이익 및 ROI (Net Profit & ROI)전체 기여 매출에서 채널톡 연간 운영 비용(900만 원)을 차감하여 최종 수익성을 평가합니다.$$\text{Net Profit } (\pi) = R - \text{Annual Cost}$$$$\text{ROI (\%)} = \left( \frac{\pi}{\text{Annual Cost}} \right) \times 100$$
+2. Calculation Logic본 시뮬레이션은 확률적 변동성을 반영하기 위해 다음과 같은 수학적 모델을 기반으로 설계되었습니다.2.1. 연간 문의 인입량 ($N_{in}$)일일 평균 문의 발생 건수를 $\lambda$로 설정하고, 독립적인 사건의 발생 횟수를 모델링하기 위해 **포아송 분포(Poisson Distribution)**를 사용합니다.$$N_{in} = \sum_{m=1}^{12} \left( \sum_{d=1}^{22} X_{d,m} \right), \quad X_{d,m} \sim \text{Poisson}(\lambda=3.0)$$2.2. 기대 매출 ($R$)각 문의가 계약으로 전환될 확률($P_{conv}$)과 무작위로 결정되는 계약 단가($L_{price}$)를 결합하여 총 매출을 산출합니다.$$R = \sum_{i=1}^{N_{in} \times P_{conv}} (L_{price, i} \times \text{Duration})$$$P_{conv}$: 시나리오별 설정된 전환율 (0.5% ~ 5.0%)$L_{price}$: 시나리오별 범위 내 임의의 계약 월 단가$\text{Duration}$: 평균 계약 존속 기간 (12개월 가정)2.3. 순이익 및 ROI (Net Profit & ROI)전체 기여 매출에서 채널톡 연간 운영 비용(900만 원)을 차감하여 최종 수익성을 평가합니다.$$\text{Net Profit } (\pi) = R - \text{Annual Cost}$$$$\text{ROI (\%)} = \left( \frac{\pi}{\text{Annual Cost}} \right) \times 100$$A
 
 
 
