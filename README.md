@@ -1,4 +1,4 @@
-![Python-3](https://github.com/user-attachments/assets/4ac03e2d-bdb7-49c7-90f5-675570eee4cf)
+<img width="1552" height="921" alt="image" src="https://github.com/user-attachments/assets/c4523ac7-794f-42de-b247-a2c1aa1d2397" />![Python-3](https://github.com/user-attachments/assets/4ac03e2d-bdb7-49c7-90f5-675570eee4cf)
 
 
 
@@ -9,39 +9,39 @@ Gabia 클라우드사업팀 인턴 Dylan (김동현)
 
 ---
 
-## 목적
-Gabia Cloud의 ChannelTalk 유지 타당성을 검증 목적  
-Monte Carlo 기반 ROI 시뮬레이션
+## 목적 : Gabia Cloud의 ChannelTalk 유지 타당성 검증
+### Monte Carlo 기반 ROI 시뮬레이션
 
-※Monte Carlo는 재무정보 확보 없이, 계약 전환의 확률적 변수에 따른 손익 분포와 ROI 달성 확률을 보기위해 선정
-주로, 연구원/의료 분야에서 적은 data로도 수십만~수백만단위 Iteration(반복) 실험을 할 때 사용함.
+※Monte Carlo는 재무정보 확보 없이, 계약 전환의 확률적 변수에 따른 손익 분포와 ROI 달성 확률을 보기위해 선정했습니다.
+이 방법론은 주로, 연구원/의료 분야에서 적은 data로도 수십만~수백만단위 Iteration(반복) 실험을 할 때 사용합니다.
 
 
-- 대상 비용: ChannelTalk 연간 9,000,000원
+- 대상 비용: ChannelTalk 연간 9,000,000원 
+    - 월 평균 70~80만원 채널톡 이용 비용이 발생하므로 연 9백 산정.
 - 계약 존속 기간: 12개월
-- 분석 기준: 연간 진성 문의 → 계약 전환 → 연간 매출 발생 구조
+- 분석 기준: 연간 진성 문의 -> 계약 전환 -> 연간 매출 발생 구조
 
 ---
 
-## 1. Work Stream
+## 1. 시뮬레이션 흐름도
 
-### 1. Cost Assumption
+### 1_1. Cost Assumption
 - ChannelTalk 연간 비용: 9,000,000원
 - 계약 존속 기간: 12개월
 
-### 2. Inquiry Modeling
+### 1_2. Inquiry Modeling
 - 월 평균 66건 진성 문의 가정
 - Poisson 분포 기반 연간 문의 수 생성
 
-### 3. Conversion Logic
+### 1_3. Conversion Logic
 - 전환율 가정
 - 계약 월 단가 범위 설정
 
-### 4. Monte Carlo Simulation
+### 1_4. Monte Carlo Simulation
 - 50,000회 반복 실행
 - 연간 순이익 분포 계산
 
-### 5. Output
+### 1_5. Output
 - 손익분기 최소 계약 단가
 - 계약 건수별 손익분기 단가
 - 시나리오별 순이익 분포
@@ -51,7 +51,7 @@ Monte Carlo 기반 ROI 시뮬레이션
 
 ## 2. Calculation Logic
 
-### 기본 파라미터
+### 2_1. 기본 파라미터
 
 | 항목 | 값 |
 |------|------|
@@ -64,7 +64,7 @@ Monte Carlo 기반 ROI 시뮬레이션
 
 ---
 
-### 문의 생성 로직
+### 2_2. 문의 생성 로직
 
 연간 문의 수는 포아송(Poisson) 분포 기반으로 생성했습니다. 
 
@@ -77,7 +77,7 @@ Monte Carlo 기반 ROI 시뮬레이션
 
 ---
 
-### 매출 계산 로직
+### 2_3. 매출 계산 로직
 
 각 문의에 대해 전환 조건:
 
@@ -94,7 +94,7 @@ if random < conversion_rate:
 
 ---
 
-### 순이익 계산
+### 2_4. 순이익 계산
 
 
 연간 순이익 = 총 계약 매출 − 9,000,000원
@@ -130,11 +130,12 @@ ROI 달성 확률:
 
 ---
 
-## 해석 포인트
+## 분석 결과
+<img width="1552" height="921" alt="image" src="https://github.com/user-attachments/assets/3a5cef3f-dde8-48bf-ba50-dd78f5ab54e7" />
 
 - ChannelTalk은 고단가 계약 1~2건으로 손익분기 가능
 - 응답 지연은 전환율 하락으로 직결
-- 핵심 변수는 문의 수가 아니라 전환율
+- 핵심 변수는 문의 수가 아닌 전환율이다.
 
 ---
 
@@ -147,4 +148,4 @@ ROI 달성 확률:
 
 ---
 
-Copyright © 2026 Dylan (Donghyun Kim)
+Copyright © 2026 가비아 클라우드 사업팀, Dylan (Donghyun Kim)
