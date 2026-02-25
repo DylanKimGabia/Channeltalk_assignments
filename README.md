@@ -1,4 +1,4 @@
-<img width="1552" height="921" alt="image" src="https://github.com/user-attachments/assets/c4523ac7-794f-42de-b247-a2c1aa1d2397" />![Python-3](https://github.com/user-attachments/assets/4ac03e2d-bdb7-49c7-90f5-675570eee4cf)
+/>![Python-3](https://github.com/user-attachments/assets/4ac03e2d-bdb7-49c7-90f5-675570eee4cf)
 
 
 
