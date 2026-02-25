@@ -90,7 +90,7 @@ if random < conversion_rate:
 
 
 계약 월 단가 × 12개월
-
+Annual Inbound ($N_{in}$):$$N_{in} = \sum_{m=1}^{12} \left( \sum_{d=1}^{22} \text{Poisson}(\lambda=3.0) \right)$$Annual Revenue ($R$):$$R = \sum_{i=1}^{N_{in} \times P_{conv}} (\text{Random Price} \times 12)$$Net Profit ($\pi$):$$\pi = R - \text{Annual Cost (9M KRW)}$$
 
 ---
 
