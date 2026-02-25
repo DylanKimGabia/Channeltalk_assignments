@@ -146,7 +146,6 @@ $$
 N_{in} = \sum_{m=1}^{12} \left( \sum_{d=1}^{22} X_{d,m} \right), \quad X_{d,m} \sim \text{Poisson}(\lambda=3.0)
 $$
 
-※ 
 $$
 D_{month} \approx \frac{52 \text{ weeks} \times 5 \text{ days/week}}{12 \text{ months}} = 21.66 \dots \approx 22
 $$
