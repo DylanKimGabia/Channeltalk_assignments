@@ -1,0 +1,179 @@
+import random
+import math
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+random.seed(42)
+
+# ── 파라미터 ──────────────────────────────────────────────────────
+ANNUAL_COST  = 9_000_000   # 채널톡 연간 비용
+CONTRACT_DUR = 12          # 계약 존속 개월
+N_SIM        = 50_000
+
+def poisson_sample(lam):
+    L = math.exp(-lam)
+    k, p = 0, 1.0
+    while p > L:
+        p *= random.random()
+        k += 1
+    return k - 1
+
+def to_rgba(hex_color, alpha):
+    h = hex_color.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return f"rgba({r},{g},{b},{alpha})"
+
+def run_mc(conv_rate, amt_min, amt_max):
+    profits = []
+    for _ in range(N_SIM):
+        annual_inq = sum(poisson_sample(3.0) for _ in range(22 * 12))
+        rev = 0
+        for _ in range(annual_inq):
+            if random.random() < conv_rate:
+                rev += random.randint(amt_min, amt_max) * CONTRACT_DUR
+        profits.append((rev - ANNUAL_COST) / 10_000)  # 만원 단위
+    return sorted(profits)
+
+# ── 시나리오 ─────────────────────────────────────────────────────
+SCENARIOS = [
+    ("최악 (전환율 0.5%, 소형)",  0.005,  500_000,  2_000_000, "#ef4444"),
+    ("보수 (전환율 1%, 소중형)",   0.010,  500_000,  8_000_000, "#f97316"),
+    ("기본 (전환율 2%, 중형)",     0.020, 2_000_000, 10_000_000, "#3b82f6"),
+]
+
+print("Monte Carlo 실행 중...")
+mc = {}
+for name, rate, lo, hi, color in SCENARIOS:
+    print(f"  {name} ...")
+    mc[name] = run_mc(rate, lo, hi)
+
+# ── 색상 ─────────────────────────────────────────────────────────
+BG     = "#0f172a"
+CARD   = "#1e293b"
+GRID   = "rgba(148,163,184,0.1)"
+TEXT   = "#f1f5f9"
+MUTED  = "#94a3b8"
+GREEN  = "#22c55e"
+YELLOW = "#eab308"
+
+# ── 서브플롯 ─────────────────────────────────────────────────────
+fig = make_subplots(
+    rows=2, cols=2,
+    subplot_titles=[
+        "① 단일 계약 1건으로 손익분기 달성하는 최소 계약 월액",
+        "② 연간 계약 건수별 손익분기 단가",
+        "③ 시나리오별 연간 순이익 분포 (Monte Carlo 5만회)",
+        "④ 시나리오별 ROI 달성 확률",
+    ],
+    vertical_spacing=0.18,
+    horizontal_spacing=0.12,
+    specs=[
+        [{"type": "bar"},    {"type": "bar"}],
+        [{"type": "violin"}, {"type": "bar"}],
+    ],
+)
+
+# 1. 존속기간별 최소 월액
+durations   = [6, 12, 18, 24, 36]
+min_monthly = [ANNUAL_COST / d / 10_000 for d in durations]
+
+fig.add_trace(go.Bar(
+    x=[f"{d}개월" for d in durations],
+    y=min_monthly,
+    marker_color=[GREEN if v <= 100 else "#ef4444" for v in min_monthly],
+    marker_line_width=0,
+    text=[f"{v:.0f}만원" for v in min_monthly],
+    textposition="outside",
+    textfont=dict(color=TEXT, size=12),
+    showlegend=False,
+    hovertemplate="존속 %{x}<br>최소 월액: %{y:.0f}만원<extra></extra>",
+), row=1, col=1)
+fig.add_hline(y=50, line_dash="dash", line_color=YELLOW, line_width=1.5,
+              annotation_text="소형 최저 50만원",
+              annotation_font=dict(color=YELLOW, size=10), row=1, col=1)
+
+# 2. 연간 계약 건수별 손익분기 단가
+n_contracts = [1, 2, 3, 5, 10, 20]
+min_per     = [ANNUAL_COST / (n * CONTRACT_DUR) / 10_000 for n in n_contracts]
+
+fig.add_trace(go.Bar(
+    x=[f"{n}건" for n in n_contracts],
+    y=min_per,
+    marker_color=[GREEN if v <= 50 else "#ef4444" for v in min_per],
+    marker_line_width=0,
+    text=[f"{v:.0f}만원" for v in min_per],
+    textposition="outside",
+    textfont=dict(color=TEXT, size=12),
+    showlegend=False,
+    hovertemplate="연간 %{x} 계약<br>건당 최소 월액: %{y:.0f}만원<extra></extra>",
+), row=1, col=2)
+fig.add_hline(y=50, line_dash="dash", line_color=YELLOW, line_width=1.5,
+              annotation_text="소형 최저 50만원",
+              annotation_font=dict(color=YELLOW, size=10), row=1, col=2)
+
+# 3. Violin
+for name, rate, lo, hi, hex_color in SCENARIOS:
+    fig.add_trace(go.Violin(
+        y=mc[name],
+        name=name,
+        line_color=hex_color,
+        fillcolor=to_rgba(hex_color, 0.25),
+        opacity=0.9,
+        box_visible=True,
+        meanline_visible=True,
+        points=False,
+        showlegend=True,
+        hoverinfo="y+name",
+    ), row=2, col=1)
+fig.add_hline(y=0, line_dash="solid", line_color=GREEN, line_width=2,
+              annotation_text="손익분기 0원",
+              annotation_font=dict(color=GREEN, size=10), row=2, col=1)
+
+# 4. ROI 달성 확률
+roi_probs = [sum(1 for x in mc[s[0]] if x > 0) / N_SIM * 100 for s in SCENARIOS]
+
+fig.add_trace(go.Bar(
+    x=[s[0] for s in SCENARIOS],
+    y=roi_probs,
+    marker_color=[s[4] for s in SCENARIOS],
+    marker_line_width=0,
+    text=[f"{v:.1f}%" for v in roi_probs],
+    textposition="inside",
+    textfont=dict(color="white", size=15),
+    showlegend=False,
+    hovertemplate="%{x}<br>ROI 달성 확률: %{y:.1f}%<extra></extra>",
+), row=2, col=2)
+fig.add_hline(y=95, line_dash="dash", line_color=YELLOW, line_width=1.5,
+              annotation_text="95% 기준선",
+              annotation_font=dict(color=YELLOW, size=10), row=2, col=2)
+
+# ── 레이아웃 ─────────────────────────────────────────────────────
+fig.update_layout(
+    title=dict(
+        text="가비아 클라우드 채널톡 ROI 시뮬레이션<br>"
+             "<sup>연간 비용 900만원 | 월 진성 문의 66건 | Monte Carlo 5만회</sup>",
+        font=dict(size=20, color=TEXT),
+        x=0.5,
+    ),
+    paper_bgcolor=BG,
+    plot_bgcolor=CARD,
+    font=dict(color=TEXT),
+    height=840,
+    margin=dict(t=110, b=60, l=60, r=60),
+    legend=dict(bgcolor=CARD, bordercolor="#334155", borderwidth=1,
+                font=dict(size=11), x=0.52, y=0.44),
+)
+fig.update_xaxes(gridcolor=GRID, zerolinecolor="#334155",
+                 tickfont=dict(color=MUTED, size=11))
+fig.update_yaxes(gridcolor=GRID, zerolinecolor="#334155",
+                 tickfont=dict(color=MUTED, size=11))
+for ann in fig.layout.annotations:
+    ann.font.color = TEXT
+    ann.font.size  = 13
+
+fig.update_yaxes(title_text="최소 월 계약금액 (만원)", row=1, col=1)
+fig.update_yaxes(title_text="건당 최소 월 계약금액 (만원)", row=1, col=2)
+fig.update_yaxes(title_text="연간 순이익 (만원)", row=2, col=1)
+fig.update_yaxes(title_text="ROI 달성 확률 (%)", range=[85, 101], row=2, col=2)
+
+fig.show()
