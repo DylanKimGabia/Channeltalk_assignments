@@ -131,7 +131,7 @@ ROI 달성 확률:
 ---
 
 ## 분석 결과
-<img width="1552" height="921" alt="image" src="https://github.com/user-attachments/assets/3a5cef3f-dde8-48bf-ba50-dd78f5ab54e7" />
+<img width="1415" height="840" alt="newplot (2)" src="https://github.com/user-attachments/assets/ce9f753c-8975-4a7b-a54c-a9d21fb20832" />
 
 - ChannelTalk은 고단가 계약 1~2건으로 손익분기 가능
 - (응답 지연)과 (전환율 하락)간 상관관계 O
